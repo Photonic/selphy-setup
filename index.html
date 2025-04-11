@@ -2,16 +2,28 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Canon SELPHY Setup (v2.2)</title>
+  <title>Canon SELPHY Setup (v2.3)</title>
   <style>
     body { font-family: sans-serif; font-size: 18px; max-width: 600px; margin: 40px auto; padding: 0 20px; }
     h1 { font-size: 1.6em; }
     .result { padding: 10px; border-radius: 6px; margin-bottom: 10px; }
     .success { background: #e0ffe0; }
     .error { background: #ffe0e0; }
-    .note { font-size: 0.9em; margin-top: 8px; background: #f9f9f9; padding: 10px; border-radius: 6px; }
+    .note { font-size: 1em; margin-top: 8px; background: #f9f9f9; padding: 10px; border-radius: 6px; }
     #download { margin-top: 20px; display: none; }
-    #safari-help { display: none; }
+    .big-link { font-size: 1.4em; word-break: break-all; }
+    .big-button {
+      font-size: 1.2em;
+      padding: 14px 20px;
+      margin-top: 12px;
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+    }
   </style>
   <script>
     const isSafari = /Safari/.test(navigator.userAgent) && !/CriOS/.test(navigator.userAgent);
@@ -54,15 +66,15 @@
   </script>
 </head>
 <body>
-  <h1>📸 Canon SELPHY instellen (v2.2)</h1>
+  <h1>📸 Canon SELPHY instellen (v2.3)</h1>
 
   <p>Controle vóór installatie van het printerprofiel:</p>
 
   <div id="browser-status" class="result">🔄 Browsercontrole...</div>
-  <div id="safari-help" class="note">
+  <div id="safari-help" class="note" style="display: none;">
     🔗 Open deze pagina handmatig in Safari:<br>
-    <code id="safari-link" style="font-size: 1.3em;">https://photonic.github.io/selphy-setup/</code>
-    <button onclick="copyLink()" style="font-size: 1.2em; padding: 12px 20px; margin-top: 10px; display: block;">📋 Kopieer link</button>
+    <div id="safari-link" class="big-link">https://photonic.github.io/selphy-setup/</div>
+    <button onclick="copyLink()" class="big-button">📋 Kopieer link</button>
   </div>
 
   <div id="ip" class="result">🔄 IP-adresstatus...</div>
