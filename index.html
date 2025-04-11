@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Canon SELPHY Setup (v2.9)</title>
+  <title>Canon SELPHY Setup (v3.0)</title>
   <style>
     body { font-family: sans-serif; font-size: 18px; max-width: 600px; margin: 40px auto; padding: 0 20px; }
     h1 { font-size: 1.6em; }
@@ -65,7 +65,36 @@ const isAndroid = /Android/i.test(navigator.userAgent);
       el.className = 'result ' + (success === true ? 'success' : (success === false ? 'error' : ''));
     }
   
-    // Browser en OS diagnose
+    
+    window.addEventListener('DOMContentLoaded', () => {
+      try {
+        const ua = navigator.userAgent || "onbekend";
+        const platform = navigator.platform || "onbekend";
+        const isiOS = /iPhone|iPad|iPod/i.test(ua);
+        const isSafari = /Safari/.test(ua) && !/CriOS/.test(ua);
+        const isAndroid = /Android/i.test(ua);
+
+        const el = (id, val) => {
+          const target = document.getElementById(id);
+          if (target) target.textContent = val;
+        };
+
+        el("diag-ua", ua);
+        el("diag-browser", ua.includes("Safari") ? "Safari" : ua.split(" ")[0]);
+        el("diag-platform", platform);
+        el("diag-safari", isSafari && isiOS ? "✅ Ja" : "❌ Nee");
+
+        getLocalIP(ip => {
+          el("diag-webrtc", ip ? "✅ Ja" : "❌ Nee (beperkt op iOS)");
+        });
+
+        el("diag-internet", navigator.onLine ? "✅ Ja" : "❌ Nee");
+
+      } catch (e) {
+        console.error("Diagnosefout:", e);
+      }
+    });
+    
 try {
   const ua = navigator.userAgent;
   const platform = navigator.platform || "onbekend";
@@ -101,7 +130,7 @@ try {
   </script>
 </head>
 <body>
-  <h1>📸 Canon SELPHY instellen (v2.9)</h1>
+  <h1>📸 Canon SELPHY instellen (v3.0)</h1>
 
   <p>Controle vóór installatie van het printerprofiel:</p>
 
@@ -159,7 +188,36 @@ try {
       setStatus('internet', false, '❌ Geen internetverbinding actief');
     }
   
-    // Browser en OS diagnose
+    
+    window.addEventListener('DOMContentLoaded', () => {
+      try {
+        const ua = navigator.userAgent || "onbekend";
+        const platform = navigator.platform || "onbekend";
+        const isiOS = /iPhone|iPad|iPod/i.test(ua);
+        const isSafari = /Safari/.test(ua) && !/CriOS/.test(ua);
+        const isAndroid = /Android/i.test(ua);
+
+        const el = (id, val) => {
+          const target = document.getElementById(id);
+          if (target) target.textContent = val;
+        };
+
+        el("diag-ua", ua);
+        el("diag-browser", ua.includes("Safari") ? "Safari" : ua.split(" ")[0]);
+        el("diag-platform", platform);
+        el("diag-safari", isSafari && isiOS ? "✅ Ja" : "❌ Nee");
+
+        getLocalIP(ip => {
+          el("diag-webrtc", ip ? "✅ Ja" : "❌ Nee (beperkt op iOS)");
+        });
+
+        el("diag-internet", navigator.onLine ? "✅ Ja" : "❌ Nee");
+
+      } catch (e) {
+        console.error("Diagnosefout:", e);
+      }
+    });
+    
 try {
   const ua = navigator.userAgent;
   const platform = navigator.platform || "onbekend";
