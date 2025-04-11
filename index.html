@@ -15,10 +15,13 @@
 <body>
   <h1>📸 Canon SELPHY instellen</h1>
 
-  <p>Voordat we je printerprofiel installeren, controleren we even het volgende:</p>
+  <p>We controleren je netwerk en geven daarna toegang tot het printerprofiel:</p>
 
   <div id="ip" class="result">🔄 Jouw IP-adres wordt opgehaald...</div>
-  <div id="printer" class="result">🔄 Printer wordt gecontroleerd...</div>
+  <div id="printer" class="result success">
+    ℹ️ Open de printerinterface handmatig: 
+    <a href="http://192.168.0.1" target="_blank">http://192.168.0.1</a>
+  </div>
   <div id="internet" class="result">🔄 Internetverbinding wordt getest...</div>
 
   <a id="download" href="Canon_SELPHY_Multi_WiFi_Profile.mobileconfig" download>
@@ -26,7 +29,7 @@
   </a>
 
   <script>
-    // IP-adres ophalen via WebRTC-truc
+    // IP-adres ophalen via WebRTC-truc (kan mislukken op iOS)
     function getLocalIP(callback) {
       let ip = 'Onbekend';
       let pc = new RTCPeerConnection({iceServers:[]});
@@ -41,6 +44,7 @@
         }
         pc.close();
       };
+      setTimeout(() => callback("Niet beschikbaar"), 3000); // fallback
     }
 
     function setStatus(id, ok, text) {
@@ -54,12 +58,12 @@
     }
 
     getLocalIP(ip => {
-      setStatus('ip', true, `✅ Jouw IP-adres: ${ip}`);
+      if (ip === "Niet beschikbaar") {
+        setStatus('ip', false, '⚠️ IP-adres kon niet worden opgehaald (iOS beperkt dit soms)');
+      } else {
+        setStatus('ip', true, `✅ Jouw IP-adres: ${ip}`);
+      }
     });
-
-    fetch('http://192.168.0.1/', { mode: 'no-cors' })
-      .then(() => setStatus('printer', true, '✅ Printer (192.168.0.1) is bereikbaar'))
-      .catch(() => setStatus('printer', false, '❌ Printer niet bereikbaar (192.168.0.1)'));
 
     fetch('https://www.google.com/generate_204')
       .then(() => {
