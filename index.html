@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Canon SELPHY Setup (v3.0)</title>
+  <title>Canon SELPHY Setup (v3.1)</title>
   <style>
     body { font-family: sans-serif; font-size: 18px; max-width: 600px; margin: 40px auto; padding: 0 20px; }
     h1 { font-size: 1.6em; }
@@ -28,7 +28,15 @@
   <script>
     const isSafari = /Safari/.test(navigator.userAgent) && !/CriOS/.test(navigator.userAgent);
 const isAndroid = /Android/i.test(navigator.userAgent);
+    
     window.addEventListener('DOMContentLoaded', () => {
+      const debug = (msg) => {
+        const log = document.getElementById("debuglog");
+        if (log) log.textContent += msg + "\n";
+      };
+
+      debug("✅ DOM geladen, start diagnose...");
+
       if (!isSafari && !isAndroid) {
         document.getElementById('browser-status').textContent = '❌ Je gebruikt geen Safari. Open deze pagina in Safari (iPhone) of gebruik Android om door te gaan.';
         document.getElementById('browser-status').className = 'result error';
@@ -66,9 +74,19 @@ const isAndroid = /Android/i.test(navigator.userAgent);
     }
   
     
+    
     window.addEventListener('DOMContentLoaded', () => {
+      const debug = (msg) => {
+        const log = document.getElementById("debuglog");
+        if (log) log.textContent += msg + "\n";
+      };
+
+      debug("✅ DOM geladen, start diagnose...");
+
       try {
+        debug("📋 navigator.userAgent gevonden");
         const ua = navigator.userAgent || "onbekend";
+        debug("🖥️ navigator.platform gevonden");
         const platform = navigator.platform || "onbekend";
         const isiOS = /iPhone|iPad|iPod/i.test(ua);
         const isSafari = /Safari/.test(ua) && !/CriOS/.test(ua);
@@ -79,16 +97,22 @@ const isAndroid = /Android/i.test(navigator.userAgent);
           if (target) target.textContent = val;
         };
 
+        debug("📦 UA: " + ua);
         el("diag-ua", ua);
         el("diag-browser", ua.includes("Safari") ? "Safari" : ua.split(" ")[0]);
+        debug("🌐 Browser herkend");
         el("diag-platform", platform);
+        debug("🪟 Platform herkend");
         el("diag-safari", isSafari && isiOS ? "✅ Ja" : "❌ Nee");
+        debug("📱 Safari/iOS check uitgevoerd");
 
         getLocalIP(ip => {
           el("diag-webrtc", ip ? "✅ Ja" : "❌ Nee (beperkt op iOS)");
+        debug("🌐 WebRTC IP-detectie uitgevoerd");
         });
 
         el("diag-internet", navigator.onLine ? "✅ Ja" : "❌ Nee");
+        debug("📡 Internetstatus gecontroleerd");
 
       } catch (e) {
         console.error("Diagnosefout:", e);
@@ -97,7 +121,8 @@ const isAndroid = /Android/i.test(navigator.userAgent);
     
 try {
   const ua = navigator.userAgent;
-  const platform = navigator.platform || "onbekend";
+  debug("🖥️ navigator.platform gevonden");
+        const platform = navigator.platform || "onbekend";
   const isiOS = /iPhone|iPad|iPod/i.test(ua);
   const isSafari = /Safari/.test(ua) && !/CriOS/.test(ua);
   const isAndroid = /Android/i.test(ua);
@@ -130,7 +155,7 @@ try {
   </script>
 </head>
 <body>
-  <h1>📸 Canon SELPHY instellen (v3.0)</h1>
+  <h1>📸 Canon SELPHY instellen (v3.1)</h1>
 
   <p>Controle vóór installatie van het printerprofiel:</p>
 
@@ -189,9 +214,19 @@ try {
     }
   
     
+    
     window.addEventListener('DOMContentLoaded', () => {
+      const debug = (msg) => {
+        const log = document.getElementById("debuglog");
+        if (log) log.textContent += msg + "\n";
+      };
+
+      debug("✅ DOM geladen, start diagnose...");
+
       try {
+        debug("📋 navigator.userAgent gevonden");
         const ua = navigator.userAgent || "onbekend";
+        debug("🖥️ navigator.platform gevonden");
         const platform = navigator.platform || "onbekend";
         const isiOS = /iPhone|iPad|iPod/i.test(ua);
         const isSafari = /Safari/.test(ua) && !/CriOS/.test(ua);
@@ -202,16 +237,22 @@ try {
           if (target) target.textContent = val;
         };
 
+        debug("📦 UA: " + ua);
         el("diag-ua", ua);
         el("diag-browser", ua.includes("Safari") ? "Safari" : ua.split(" ")[0]);
+        debug("🌐 Browser herkend");
         el("diag-platform", platform);
+        debug("🪟 Platform herkend");
         el("diag-safari", isSafari && isiOS ? "✅ Ja" : "❌ Nee");
+        debug("📱 Safari/iOS check uitgevoerd");
 
         getLocalIP(ip => {
           el("diag-webrtc", ip ? "✅ Ja" : "❌ Nee (beperkt op iOS)");
+        debug("🌐 WebRTC IP-detectie uitgevoerd");
         });
 
         el("diag-internet", navigator.onLine ? "✅ Ja" : "❌ Nee");
+        debug("📡 Internetstatus gecontroleerd");
 
       } catch (e) {
         console.error("Diagnosefout:", e);
@@ -220,7 +261,8 @@ try {
     
 try {
   const ua = navigator.userAgent;
-  const platform = navigator.platform || "onbekend";
+  debug("🖥️ navigator.platform gevonden");
+        const platform = navigator.platform || "onbekend";
   const isiOS = /iPhone|iPad|iPod/i.test(ua);
   const isSafari = /Safari/.test(ua) && !/CriOS/.test(ua);
   const isAndroid = /Android/i.test(ua);
@@ -263,5 +305,11 @@ try {
   </div>
   
 
-</body>
+
+    <div class="note" style="margin-top: 30px;">
+      <h3>🪛 Debuglog</h3>
+      <pre id="debuglog" style="font-size: 0.85em; white-space: pre-wrap; background: #eee; padding: 10px; border-radius: 6px;"></pre>
+    </div>
+  </body>
+
 </html>
