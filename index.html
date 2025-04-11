@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Canon SELPHY Setup (v2.7)</title>
+  <title>Canon SELPHY Setup (v2.8)</title>
   <style>
     body { font-family: sans-serif; font-size: 18px; max-width: 600px; margin: 40px auto; padding: 0 20px; }
     h1 { font-size: 1.6em; }
@@ -68,8 +68,8 @@ const isAndroid = /Android/i.test(navigator.userAgent);
     // Browser en OS diagnose
     const ua = navigator.userAgent;
     document.getElementById("diag-ua").textContent = ua;
-    document.getElementById("diag-browser").textContent = navigator.userAgentData?.brands?.map(b => b.brand).join(', ') || navigator.userAgent;
-    document.getElementById("diag-platform").textContent = navigator.userAgentData?.platform || navigator.platform || "onbekend";
+    document.getElementById("diag-browser").textContent = navigator.userAgent;
+    document.getElementById("diag-platform").textContent = navigator.platform || "onbekend";
 
     const isSafari = /Safari/.test(ua) && !/CriOS/.test(ua);
     const isAndroid = /Android/i.test(ua);
@@ -87,7 +87,7 @@ const isAndroid = /Android/i.test(navigator.userAgent);
   </script>
 </head>
 <body>
-  <h1>📸 Canon SELPHY instellen (v2.7)</h1>
+  <h1>📸 Canon SELPHY instellen (v2.8)</h1>
 
   <p>Controle vóór installatie van het printerprofiel:</p>
 
@@ -148,8 +148,8 @@ const isAndroid = /Android/i.test(navigator.userAgent);
     // Browser en OS diagnose
     const ua = navigator.userAgent;
     document.getElementById("diag-ua").textContent = ua;
-    document.getElementById("diag-browser").textContent = navigator.userAgentData?.brands?.map(b => b.brand).join(', ') || navigator.userAgent;
-    document.getElementById("diag-platform").textContent = navigator.userAgentData?.platform || navigator.platform || "onbekend";
+    document.getElementById("diag-browser").textContent = navigator.userAgent;
+    document.getElementById("diag-platform").textContent = navigator.platform || "onbekend";
 
     const isSafari = /Safari/.test(ua) && !/CriOS/.test(ua);
     const isAndroid = /Android/i.test(ua);
