@@ -2,25 +2,25 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Canon SELPHY Setup (v1.7)</title>
+  <title>Canon SELPHY Setup (v1.8)</title>
   <style>
-    body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 0 20px; }
+    body { font-family: sans-serif; font-size: 18px; max-width: 600px; margin: 40px auto; padding: 0 20px; }
     h1 { font-size: 1.6em; }
     .result { padding: 10px; border-radius: 6px; margin-bottom: 10px; }
     .success { background: #e0ffe0; }
     .error { background: #ffe0e0; }
-    #download { margin-top: 20px; }
     .note { font-size: 0.9em; margin-top: 8px; background: #f9f9f9; padding: 10px; border-radius: 6px; }
+    #download { margin-top: 20px; display: none; }
   </style>
-<script>
-      // Betere Safari-detectie: check op Safari, sluit Chrome iOS (CriOS) uit
-      const isSafari = /Safari/.test(navigator.userAgent) && !/CriOS/.test(navigator.userAgent);
-      window.addEventListener('DOMContentLoaded', () => {
-        if (!isSafari) {
-          alert("⚠️ Deze pagina werkt alleen goed in Safari. Open dit opnieuw in Safari om het profiel te kunnen installeren.");
-        }
-      });
-    
+  <script>
+    const isSafari = /Safari/.test(navigator.userAgent) && !/CriOS/.test(navigator.userAgent);
+    window.addEventListener('DOMContentLoaded', () => {
+      if (!isSafari) {
+        alert("⚠️ Deze pagina werkt alleen goed in Safari. Open dit opnieuw in Safari om het profiel te kunnen installeren.");
+      } else {
+        document.getElementById('download').style.display = 'block';
+      }
+    });
     function copyLink() {
       const linkText = document.getElementById('safari-link').innerText;
       navigator.clipboard.writeText(linkText).then(() => {
@@ -29,48 +29,6 @@
         alert("Kopiëren mislukt. Houd de link ingedrukt om handmatig te kopiëren.");
       });
     }
-    </script>
-</head>
-<body>
-  <h1>📸 Canon SELPHY instellen (v1.7)</h1>
-
-  <p>Controle vóór installatie van het printerprofiel:</p>
-
-  <div id="ip" class="result">🔄 IP-adresstatus...</div>
-  <div class="result">
-    ℹ️ Open de printerinterface handmatig: 
-    <a href="http://192.168.0.1" target="_blank">http://192.168.0.1</a>
-  </div>
-  <div id="internet" class="result">🔄 Internetstatus...</div>
-
-  <div id="download">
-    <a href="Canon_SELPHY_Multi_WiFi_Profile.mobileconfig" download>
-      📥 Installeer het Canon-profiel
-    </a>
-    <div class="note">
-      🔗 Open deze pagina handmatig in Safari:
-      <br><code id="safari-link">https://photonic.github.io/selphy-setup/</code> <button onclick="copyLink()">Kopieer</button>
-      <br>Plak deze link in Safari als je de profielinstallatie wilt laten werken.
-    </div>
-
-    <div class="note">
-      ⚠️ <strong>Na het downloaden:</strong><br>
-      Open <strong>Instellingen > Algemeen > VPN en apparaatbeheer</strong><br>
-      of tik bovenaan op <strong>“Profiel gedownload”</strong> om het profiel te installeren.
-    </div>
-    <div class="note">
-      🔗 Open deze pagina handmatig in Safari:
-      <br><code id="safari-link">https://photonic.github.io/selphy-setup/</code> <button onclick="copyLink()">Kopieer</button>
-      <br>Plak deze link in Safari als je de profielinstallatie wilt laten werken.
-    </div>
-
-    <div class="note">
-      ℹ️ Zorg dat mobiel internet actief blijft tijdens printer-wifi:  
-      <strong>Instellingen > Mobiel netwerk > Schakel over op mobiele data > Automatisch</strong>
-    </div>
-  </div>
-
-  <script>
     function getLocalIP(callback) {
       let pc = new RTCPeerConnection({iceServers:[]});
       pc.createDataChannel('');
@@ -83,13 +41,47 @@
       };
       setTimeout(() => callback(null), 3000);
     }
-
     function setStatus(id, success, message) {
       const el = document.getElementById(id);
       el.textContent = message;
       el.className = 'result ' + (success === true ? 'success' : (success === false ? 'error' : ''));
     }
+  </script>
+</head>
+<body>
+  <h1>📸 Canon SELPHY instellen (v1.8)</h1>
 
+  <p>Controle vóór installatie van het printerprofiel:</p>
+
+  <div id="ip" class="result">🔄 IP-adresstatus...</div>
+  <div class="result">
+    ℹ️ Open de printerinterface handmatig: 
+    <a href="http://192.168.0.1" target="_blank">http://192.168.0.1</a>
+  </div>
+  <div id="internet" class="result">🔄 Internetstatus...</div>
+
+  <div class="note">
+    🔗 Open deze pagina handmatig in Safari:<br>
+    <code id="safari-link">https://photonic.github.io/selphy-setup/</code>
+    <button onclick="copyLink()">Kopieer</button>
+  </div>
+
+  <div id="download">
+    <a href="Canon_SELPHY_Multi_WiFi_Profile.mobileconfig" download>
+      📥 Installeer het Canon-profiel
+    </a>
+    <div class="note">
+      ⚠️ <strong>Na het downloaden:</strong><br>
+      Open <strong>Instellingen > Algemeen > VPN en apparaatbeheer</strong><br>
+      of tik bovenaan op <strong>“Profiel gedownload”</strong> om het profiel te installeren.
+    </div>
+    <div class="note">
+      ℹ️ Zorg dat mobiel internet actief blijft tijdens printer-wifi:  
+      <strong>Instellingen > Mobiel netwerk > Schakel over op mobiele data > Automatisch</strong>
+    </div>
+  </div>
+
+  <script>
     getLocalIP(ip => {
       if (ip) {
         setStatus('ip', true, `✅ IP-adres gedetecteerd (${ip})`);
@@ -97,21 +89,11 @@
         setStatus('ip', null, '⚠️ IP-adres niet beschikbaar (kan voorkomen op iOS)');
       }
     });
-
     if (navigator.onLine) {
       setStatus('internet', true, '✅ Internetverbinding aanwezig');
     } else {
       setStatus('internet', false, '❌ Geen internetverbinding actief');
     }
-  
-    function copyLink() {
-      const linkText = document.getElementById('safari-link').innerText;
-      navigator.clipboard.writeText(linkText).then(() => {
-        alert("Link gekopieerd naar klembord.");
-      }).catch(() => {
-        alert("Kopiëren mislukt. Houd de link ingedrukt om handmatig te kopiëren.");
-      });
-    }
-    </script>
+  </script>
 </body>
 </html>
