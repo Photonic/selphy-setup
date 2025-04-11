@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Canon SELPHY Setup (v3.2)</title>
+  <title>Canon SELPHY Setup (v3.3)</title>
   <style>
     body { font-family: sans-serif; font-size: 18px; max-width: 600px; margin: 40px auto; padding: 0 20px; }
     h1 { font-size: 1.6em; }
@@ -29,7 +29,60 @@
     const isSafari = /Safari/.test(navigator.userAgent) && !/CriOS/.test(navigator.userAgent);
 const isAndroid = /Android/i.test(navigator.userAgent);
     
+    
     window.onload = function() {
+      const debug = (msg) => {
+        const log = document.getElementById("debuglog");
+        if (log) log.textContent += msg + "\n";
+      };
+
+      debug("🚀 window.onload gestart");
+
+      try {
+        debug("📋 Start diagnoselogica");
+
+        const ua = navigator.userAgent || "onbekend";
+        debug("🧩 userAgent: " + ua);
+
+        const platform = navigator.platform || "onbekend";
+        debug("🧱 platform: " + platform);
+
+        const isiOS = /iPhone|iPad|iPod/i.test(ua);
+        const isSafari = /Safari/.test(ua) && !/CriOS/.test(ua);
+        const isAndroid = /Android/i.test(ua);
+        debug("📱 isiOS=" + isiOS + ", isSafari=" + isSafari + ", isAndroid=" + isAndroid);
+
+        const el = (id, val) => {
+          const target = document.getElementById(id);
+          if (target) {
+            target.textContent = val;
+            debug("✅ " + id + " ingevuld met: " + val);
+          } else {
+            debug("❌ element niet gevonden: " + id);
+          }
+        };
+
+        el("diag-ua", ua);
+        el("diag-browser", ua.includes("Safari") ? "Safari" : ua.split(" ")[0]);
+        el("diag-platform", platform);
+        el("diag-safari", isSafari && isiOS ? "✅ Ja" : "❌ Nee");
+
+        try {
+          getLocalIP(ip => {
+            el("diag-webrtc", ip ? "✅ Ja" : "❌ Nee (beperkt op iOS)");
+            debug("🌐 WebRTC IP = " + ip);
+          });
+        } catch (err) {
+          debug("❗ getLocalIP error: " + err.message);
+        }
+
+        el("diag-internet", navigator.onLine ? "✅ Ja" : "❌ Nee");
+
+      } catch (e) {
+        debug("💥 Fout in onload: " + e.message);
+      }
+    }
+    
       const debug = (msg) => {
         const log = document.getElementById("debuglog");
         if (log) log.textContent += msg + "\n";
@@ -75,7 +128,60 @@ const isAndroid = /Android/i.test(navigator.userAgent);
   
     
     
+    
     window.onload = function() {
+      const debug = (msg) => {
+        const log = document.getElementById("debuglog");
+        if (log) log.textContent += msg + "\n";
+      };
+
+      debug("🚀 window.onload gestart");
+
+      try {
+        debug("📋 Start diagnoselogica");
+
+        const ua = navigator.userAgent || "onbekend";
+        debug("🧩 userAgent: " + ua);
+
+        const platform = navigator.platform || "onbekend";
+        debug("🧱 platform: " + platform);
+
+        const isiOS = /iPhone|iPad|iPod/i.test(ua);
+        const isSafari = /Safari/.test(ua) && !/CriOS/.test(ua);
+        const isAndroid = /Android/i.test(ua);
+        debug("📱 isiOS=" + isiOS + ", isSafari=" + isSafari + ", isAndroid=" + isAndroid);
+
+        const el = (id, val) => {
+          const target = document.getElementById(id);
+          if (target) {
+            target.textContent = val;
+            debug("✅ " + id + " ingevuld met: " + val);
+          } else {
+            debug("❌ element niet gevonden: " + id);
+          }
+        };
+
+        el("diag-ua", ua);
+        el("diag-browser", ua.includes("Safari") ? "Safari" : ua.split(" ")[0]);
+        el("diag-platform", platform);
+        el("diag-safari", isSafari && isiOS ? "✅ Ja" : "❌ Nee");
+
+        try {
+          getLocalIP(ip => {
+            el("diag-webrtc", ip ? "✅ Ja" : "❌ Nee (beperkt op iOS)");
+            debug("🌐 WebRTC IP = " + ip);
+          });
+        } catch (err) {
+          debug("❗ getLocalIP error: " + err.message);
+        }
+
+        el("diag-internet", navigator.onLine ? "✅ Ja" : "❌ Nee");
+
+      } catch (e) {
+        debug("💥 Fout in onload: " + e.message);
+      }
+    }
+    
       const debug = (msg) => {
         const log = document.getElementById("debuglog");
         if (log) log.textContent += msg + "\n";
@@ -159,7 +265,7 @@ try {
     document.body.insertAdjacentHTML("afterbegin", "<div style='padding:10px;background:#f0f0f0;border-left:4px solid #0c0;'>✅ JavaScript actief (inline)</div>");
   </script>
 
-  <h1>📸 Canon SELPHY instellen (v3.2)</h1>
+  <h1>📸 Canon SELPHY instellen (v3.3)</h1>
 
   <p>Controle vóór installatie van het printerprofiel:</p>
 
@@ -219,7 +325,60 @@ try {
   
     
     
+    
     window.onload = function() {
+      const debug = (msg) => {
+        const log = document.getElementById("debuglog");
+        if (log) log.textContent += msg + "\n";
+      };
+
+      debug("🚀 window.onload gestart");
+
+      try {
+        debug("📋 Start diagnoselogica");
+
+        const ua = navigator.userAgent || "onbekend";
+        debug("🧩 userAgent: " + ua);
+
+        const platform = navigator.platform || "onbekend";
+        debug("🧱 platform: " + platform);
+
+        const isiOS = /iPhone|iPad|iPod/i.test(ua);
+        const isSafari = /Safari/.test(ua) && !/CriOS/.test(ua);
+        const isAndroid = /Android/i.test(ua);
+        debug("📱 isiOS=" + isiOS + ", isSafari=" + isSafari + ", isAndroid=" + isAndroid);
+
+        const el = (id, val) => {
+          const target = document.getElementById(id);
+          if (target) {
+            target.textContent = val;
+            debug("✅ " + id + " ingevuld met: " + val);
+          } else {
+            debug("❌ element niet gevonden: " + id);
+          }
+        };
+
+        el("diag-ua", ua);
+        el("diag-browser", ua.includes("Safari") ? "Safari" : ua.split(" ")[0]);
+        el("diag-platform", platform);
+        el("diag-safari", isSafari && isiOS ? "✅ Ja" : "❌ Nee");
+
+        try {
+          getLocalIP(ip => {
+            el("diag-webrtc", ip ? "✅ Ja" : "❌ Nee (beperkt op iOS)");
+            debug("🌐 WebRTC IP = " + ip);
+          });
+        } catch (err) {
+          debug("❗ getLocalIP error: " + err.message);
+        }
+
+        el("diag-internet", navigator.onLine ? "✅ Ja" : "❌ Nee");
+
+      } catch (e) {
+        debug("💥 Fout in onload: " + e.message);
+      }
+    }
+    
       const debug = (msg) => {
         const log = document.getElementById("debuglog");
         if (log) log.textContent += msg + "\n";
