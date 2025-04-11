@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Canon SELPHY Setup (v3.6)</title>
+  <title>Canon SELPHY Setup (v3.7)</title>
   <style>
     body {
       font-family: sans-serif;
@@ -11,23 +11,84 @@
       margin: 40px auto;
       padding: 0 20px;
     }
-    pre {
-      background: #f4f4f4;
-      padding: 10px;
-      border-radius: 6px;
-    }
+    .result { padding: 10px; border-radius: 6px; margin-bottom: 10px; background: #f0f0f0; }
+    .note { font-size: 0.9em; background: #f9f9f9; padding: 10px; border-radius: 6px; margin-top: 30px; }
+    code { font-size: 0.85em; }
   </style>
 </head>
 <body>
-  <h1>📸 Canon SELPHY instellen (v3.6)</h1>
-  <p>Als deze test werkt, zie je hieronder je userAgent:</p>
+  <h1>📸 Canon SELPHY instellen (v3.7)</h1>
+  <p>Als dit werkt, zie je hieronder live diagnose:</p>
+
+  <div class="note">
+    <strong>Technische diagnose</strong><br>
+    Browser: <span id="browser">...</span><br>
+    Platform: <span id="platform">...</span><br>
+    iOS Safari geschikt: <span id="safari">...</span><br>
+    WebRTC IP-detectie: <span id="webrtc">...</span><br>
+    Internetverbinding: <span id="internet">...</span><br>
+    User-Agent: <code id="ua">...</code>
+  </div>
+
+  <div class="note">
+    <strong>Debuglog</strong><br>
+    <pre id="debuglog" style="white-space: pre-wrap;"></pre>
+  </div>
 
   <script>
-    try {
-      document.body.insertAdjacentHTML("beforeend", "<pre>" + navigator.userAgent + "</pre>");
-    } catch (e) {
-      document.body.insertAdjacentHTML("beforeend", "<pre>❌ FOUT: " + e.message + "</pre>");
+    function getLocalIP(callback) {
+      let pc = new RTCPeerConnection({iceServers:[]});
+      pc.createDataChannel('');
+      pc.createOffer().then(offer => pc.setLocalDescription(offer));
+      pc.onicecandidate = (ice) => {
+        if (!ice || !ice.candidate || !ice.candidate.candidate) return;
+        let result = /([0-9]{1,3}(\.[0-9]{1,3}){3})/.exec(ice.candidate.candidate);
+        if (result) callback(result[1]);
+        pc.close();
+      };
+      setTimeout(() => callback(null), 3000);
     }
+
+    function debug(msg) {
+      const log = document.getElementById("debuglog");
+      if (log) log.textContent += msg + "\n";
+    }
+
+    setTimeout(() => {
+      debug("⏱️ Diagnose gestart (v3.7)");
+
+      try {
+        const ua = navigator.userAgent || "onbekend";
+        const platform = navigator.platform || "onbekend";
+        const isiOS = /iPhone|iPad|iPod/i.test(ua);
+        const isSafari = /Safari/.test(ua) && !/CriOS/.test(ua);
+
+        const el = (id, val) => {
+          const target = document.getElementById(id);
+          if (target) {
+            target.textContent = val;
+            debug("✅ " + id + " → " + val);
+          } else {
+            debug("❌ niet gevonden: " + id);
+          }
+        };
+
+        el("ua", ua);
+        el("browser", ua.includes("Safari") ? "Safari" : ua.split(" ")[0]);
+        el("platform", platform);
+        el("safari", isSafari && isiOS ? "✅ Ja" : "❌ Nee");
+
+        getLocalIP(ip => {
+          el("webrtc", ip ? "✅ Ja" : "❌ Nee (mogelijk geblokkeerd)");
+          debug("🌐 WebRTC IP: " + ip);
+        });
+
+        el("internet", navigator.onLine ? "✅ Ja" : "❌ Nee");
+
+      } catch (e) {
+        debug("💥 Fout in diagnose: " + e.message);
+      }
+    }, 150);
   </script>
 </body>
 </html>
