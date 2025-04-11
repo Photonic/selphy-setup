@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Canon SELPHY Setup (v3.7)</title>
+  <title>Canon SELPHY Setup (v4.0)</title>
   <style>
     body {
       font-family: sans-serif;
@@ -14,16 +14,23 @@
     .result { padding: 10px; border-radius: 6px; margin-bottom: 10px; background: #f0f0f0; }
     .note { font-size: 0.9em; background: #f9f9f9; padding: 10px; border-radius: 6px; margin-top: 30px; }
     code { font-size: 0.85em; }
+    .ok { color: green; }
+    .no { color: red; }
   </style>
 </head>
 <body>
-  <h1>📸 Canon SELPHY instellen (v3.7)</h1>
-  <p>Als dit werkt, zie je hieronder live diagnose:</p>
+  <h1>📸 Canon SELPHY instellen (v4.0)</h1>
+
+  <p>Controle vóór installatie van het printerprofiel:</p>
+  <div id="browser-warning" class="result">🔄 Browsercontrole...</div>
+
+  <p>Na installatie kun je deze pagina ook in andere browsers gebruiken.</p>
 
   <div class="note">
     <strong>Technische diagnose</strong><br>
     Browser: <span id="browser">...</span><br>
     Platform: <span id="platform">...</span><br>
+    Besturingssysteemversie: <span id="osversion">...</span><br>
     iOS Safari geschikt: <span id="safari">...</span><br>
     WebRTC IP-detectie: <span id="webrtc">...</span><br>
     Internetverbinding: <span id="internet">...</span><br>
@@ -54,14 +61,20 @@
       if (log) log.textContent += msg + "\n";
     }
 
+    function extractOSVersion(ua) {
+      let match = ua.match(/OS ([0-9_]*) like Mac OS X/);
+      return match ? match[1].replace(/_/g, ".") : "onbekend";
+    }
+
     setTimeout(() => {
-      debug("⏱️ Diagnose gestart (v3.7)");
+      debug("⏱️ Diagnose gestart (v4.0)");
 
       try {
         const ua = navigator.userAgent || "onbekend";
         const platform = navigator.platform || "onbekend";
         const isiOS = /iPhone|iPad|iPod/i.test(ua);
         const isSafari = /Safari/.test(ua) && !/CriOS/.test(ua);
+        const osVersion = extractOSVersion(ua);
 
         const el = (id, val) => {
           const target = document.getElementById(id);
@@ -76,7 +89,17 @@
         el("ua", ua);
         el("browser", ua.includes("Safari") ? "Safari" : ua.split(" ")[0]);
         el("platform", platform);
+        el("osversion", osVersion);
         el("safari", isSafari && isiOS ? "✅ Ja" : "❌ Nee");
+
+        const warn = document.getElementById("browser-warning");
+        if (isSafari && isiOS) {
+          warn.textContent = "✅ Je gebruikt Safari op iOS. Profielinstallatie is mogelijk.";
+          warn.style.background = "#e0ffe0";
+        } else {
+          warn.textContent = "❌ Gebruik Safari op iOS om het profiel te installeren.";
+          warn.style.background = "#ffe0e0";
+        }
 
         getLocalIP(ip => {
           el("webrtc", ip ? "✅ Ja" : "❌ Nee (mogelijk geblokkeerd)");
