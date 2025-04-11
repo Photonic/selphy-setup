@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Canon SELPHY Setup (v2.4)</title>
+  <title>Canon SELPHY Setup (v2.5)</title>
   <style>
     body { font-family: sans-serif; font-size: 18px; max-width: 600px; margin: 40px auto; padding: 0 20px; }
     h1 { font-size: 1.6em; }
@@ -66,7 +66,7 @@
   </script>
 </head>
 <body>
-  <h1>📸 Canon SELPHY instellen (v2.4)</h1>
+  <h1>📸 Canon SELPHY instellen (v2.5)</h1>
 
   <p>Controle vóór installatie van het printerprofiel:</p>
 
@@ -105,7 +105,9 @@
   <script>
     getLocalIP(ip => {
       const expectedIP = '192.168.0.101';
-      if (ip === expectedIP) {
+      if (!ip) {
+        setStatus('profile-check', null, '⚠️ Kan profielstatus niet controleren – IP-adres niet beschikbaar op dit moment (iOS-beperking)');
+      } else if (ip === expectedIP) {
         setStatus('profile-check', true, '✅ Profiel lijkt actief en correct ingesteld');
       } else {
         setStatus('profile-check', false, '❌ Profiel niet actief (IP wijkt af van verwachte waarde)');
