@@ -13,11 +13,11 @@
     .note { font-size: 0.9em; margin-top: 8px; background: #f9f9f9; padding: 10px; border-radius: 6px; }
   </style>
 <script>
-      // Safari-check
-      const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+      // Betere Safari-detectie: check op Safari, sluit Chrome iOS (CriOS) uit
+      const isSafari = /Safari/.test(navigator.userAgent) && !/CriOS/.test(navigator.userAgent);
       window.addEventListener('DOMContentLoaded', () => {
         if (!isSafari) {
-          alert("⚠️ Deze pagina werkt het best in Safari. Open dit opnieuw in Safari om het profiel te kunnen installeren.");
+          alert("⚠️ Deze pagina werkt alleen goed in Safari. Open dit opnieuw in Safari om het profiel te kunnen installeren.");
         }
       });
     </script>
