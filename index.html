@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Canon SELPHY Setup (v3.3)</title>
+  <title>Canon SELPHY Setup (v3.4)</title>
   <style>
     body { font-family: sans-serif; font-size: 18px; max-width: 600px; margin: 40px auto; padding: 0 20px; }
     h1 { font-size: 1.6em; }
@@ -25,7 +25,7 @@
       border-radius: 8px;
     }
   </style>
-  <script>
+  <script defer>
     const isSafari = /Safari/.test(navigator.userAgent) && !/CriOS/.test(navigator.userAgent);
 const isAndroid = /Android/i.test(navigator.userAgent);
     
@@ -260,12 +260,18 @@ try {
 
   </script>
 </head>
+
 <body>
+  <noscript><div style="padding:10px;background:#ffdddd;border-left:4px solid red;">❌ JavaScript is uitgeschakeld. Deze pagina werkt niet zonder JavaScript.</div></noscript>
   <script>
     document.body.insertAdjacentHTML("afterbegin", "<div style='padding:10px;background:#f0f0f0;border-left:4px solid #0c0;'>✅ JavaScript actief (inline)</div>");
   </script>
 
-  <h1>📸 Canon SELPHY instellen (v3.3)</h1>
+  <script defer>
+    document.body.insertAdjacentHTML("afterbegin", "<div style='padding:10px;background:#f0f0f0;border-left:4px solid #0c0;'>✅ JavaScript actief (inline)</div>");
+  </script>
+
+  <h1>📸 Canon SELPHY instellen (v3.4)</h1>
 
   <p>Controle vóór installatie van het printerprofiel:</p>
 
@@ -301,7 +307,7 @@ try {
     </div>
   </div>
 
-  <script>
+  <script defer>
     getLocalIP(ip => {
       const expectedIP = '192.168.0.101';
       if (!ip) {
