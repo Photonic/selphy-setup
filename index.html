@@ -20,6 +20,15 @@
           alert("⚠️ Deze pagina werkt alleen goed in Safari. Open dit opnieuw in Safari om het profiel te kunnen installeren.");
         }
       });
+    
+    function copyLink() {
+      const linkText = document.getElementById('safari-link').innerText;
+      navigator.clipboard.writeText(linkText).then(() => {
+        alert("Link gekopieerd naar klembord.");
+      }).catch(() => {
+        alert("Kopiëren mislukt. Houd de link ingedrukt om handmatig te kopiëren.");
+      });
+    }
     </script>
 </head>
 <body>
@@ -40,7 +49,7 @@
     </a>
     <div class="note">
       🔗 Open deze pagina handmatig in Safari:
-      <br><code>https://photonic.github.io/selphy-setup/</code>
+      <br><code id="safari-link">https://photonic.github.io/selphy-setup/</code> <button onclick="copyLink()">Kopieer</button>
       <br>Plak deze link in Safari als je de profielinstallatie wilt laten werken.
     </div>
 
@@ -51,7 +60,7 @@
     </div>
     <div class="note">
       🔗 Open deze pagina handmatig in Safari:
-      <br><code>https://photonic.github.io/selphy-setup/</code>
+      <br><code id="safari-link">https://photonic.github.io/selphy-setup/</code> <button onclick="copyLink()">Kopieer</button>
       <br>Plak deze link in Safari als je de profielinstallatie wilt laten werken.
     </div>
 
@@ -94,6 +103,15 @@
     } else {
       setStatus('internet', false, '❌ Geen internetverbinding actief');
     }
-  </script>
+  
+    function copyLink() {
+      const linkText = document.getElementById('safari-link').innerText;
+      navigator.clipboard.writeText(linkText).then(() => {
+        alert("Link gekopieerd naar klembord.");
+      }).catch(() => {
+        alert("Kopiëren mislukt. Houd de link ingedrukt om handmatig te kopiëren.");
+      });
+    }
+    </script>
 </body>
 </html>
