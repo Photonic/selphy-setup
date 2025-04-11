@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Canon SELPHY Setup (v4.0)</title>
+  <title>Canon SELPHY Setup (v4.1)</title>
   <style>
     body {
       font-family: sans-serif;
@@ -19,12 +19,21 @@
   </style>
 </head>
 <body>
-  <h1>📸 Canon SELPHY instellen (v4.0)</h1>
+  <h1>📸 Canon SELPHY instellen (v4.1)</h1>
 
   <p>Controle vóór installatie van het printerprofiel:</p>
   <div id="browser-warning" class="result">🔄 Browsercontrole...</div>
 
-  <p>Na installatie kun je deze pagina ook in andere browsers gebruiken.</p>
+  <div id="profile-download" class="result" style="display: none;">
+    📥 <strong><a href="Canon_SELPHY_Multi_WiFi_Profile.mobileconfig" download>Download het Canon printerprofiel</a></strong><br>
+    Alleen zichtbaar in Safari op iOS
+  </div>
+
+  <div id="profile-download" class="result" style="display: none;">
+      📥 <strong><a href="Canon_SELPHY_Multi_WiFi_Profile.mobileconfig" download>Download het Canon printerprofiel</a></strong><br>
+      Alleen zichtbaar in Safari op iOS
+    </div>
+    <p>Na installatie kun je deze pagina ook in andere browsers gebruiken.</p>
 
   <div class="note">
     <strong>Technische diagnose</strong><br>
@@ -94,8 +103,10 @@
 
         const warn = document.getElementById("browser-warning");
         if (isSafari && isiOS) {
+          document.getElementById("profile-download").style.display = "block";
           warn.textContent = "✅ Je gebruikt Safari op iOS. Profielinstallatie is mogelijk.";
           warn.style.background = "#e0ffe0";
+          document.getElementById("profile-download").style.display = "block";
         } else {
           warn.textContent = "❌ Gebruik Safari op iOS om het profiel te installeren.";
           warn.style.background = "#ffe0e0";
