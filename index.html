@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Canon SELPHY Setup (v4.2)</title>
+  <title>Canon SELPHY Setup (v4.3)</title>
   <style>
     body {
       font-family: sans-serif;
@@ -19,7 +19,7 @@
   </style>
 </head>
 <body>
-  <h1>📸 Canon SELPHY instellen (v4.2)</h1>
+  <h1>📸 Canon SELPHY instellen (v4.3)</h1>
 
   <p>Controle vóór installatie van het printerprofiel:</p>
   <div id="browser-warning" class="result">🔄 Browsercontrole...</div>
@@ -33,7 +33,7 @@
       ❗ <strong>Open deze pagina in Safari om het profiel te kunnen installeren.</strong><br>
       <div style="margin-top: 10px;">
         🔗 <code id="safari-link">https://photonic.github.io/selphy-setup/</code><br>
-        <button onclick="navigator.clipboard.writeText('https://photonic.github.io/selphy-setup/')" style="margin-top: 8px; padding: 10px 16px; font-size: 1em;">📋 Kopieer link</button>
+        <button onclick="copyLink()" style="margin-top: 8px; padding: 10px 16px; font-size: 1em;">📋 Kopieer link</button>
       </div>
     </div>
     <p>Na installatie kun je deze pagina ook in andere browsers gebruiken.</p>
@@ -126,6 +126,14 @@
         debug("💥 Fout in diagnose: " + e.message);
       }
     }, 150);
-  </script>
+  
+    function copyLink() {
+      const text = "https://photonic.github.io/selphy-setup/";
+      navigator.clipboard.writeText(text)
+        .then(() => alert("✅ Link gekopieerd naar klembord!"))
+        .catch(() => alert("❌ Kopiëren mislukt. Houd de link ingedrukt om handmatig te kopiëren."));
+    }
+</script>
+
 </body>
 </html>
