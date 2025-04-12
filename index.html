@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Canon SELPHY Setup (v4.1)</title>
+  <title>Canon SELPHY Setup (v4.2)</title>
   <style>
     body {
       font-family: sans-serif;
@@ -19,7 +19,7 @@
   </style>
 </head>
 <body>
-  <h1>📸 Canon SELPHY instellen (v4.1)</h1>
+  <h1>📸 Canon SELPHY instellen (v4.2)</h1>
 
   <p>Controle vóór installatie van het printerprofiel:</p>
   <div id="browser-warning" class="result">🔄 Browsercontrole...</div>
@@ -29,9 +29,12 @@
     Alleen zichtbaar in Safari op iOS
   </div>
 
-  <div id="profile-download" class="result" style="display: none;">
-      📥 <strong><a href="Canon_SELPHY_Multi_WiFi_Profile.mobileconfig" download>Download het Canon printerprofiel</a></strong><br>
-      Alleen zichtbaar in Safari op iOS
+  <div id="safari-hint" class="result" style="display: none;">
+      ❗ <strong>Open deze pagina in Safari om het profiel te kunnen installeren.</strong><br>
+      <div style="margin-top: 10px;">
+        🔗 <code id="safari-link">https://photonic.github.io/selphy-setup/</code><br>
+        <button onclick="navigator.clipboard.writeText('https://photonic.github.io/selphy-setup/')" style="margin-top: 8px; padding: 10px 16px; font-size: 1em;">📋 Kopieer link</button>
+      </div>
     </div>
     <p>Na installatie kun je deze pagina ook in andere browsers gebruiken.</p>
 
@@ -76,7 +79,7 @@
     }
 
     setTimeout(() => {
-      debug("⏱️ Diagnose gestart (v4.0)");
+      debug("⏱️ Diagnose gestart (v4.1)");
 
       try {
         const ua = navigator.userAgent || "onbekend";
@@ -103,13 +106,13 @@
 
         const warn = document.getElementById("browser-warning");
         if (isSafari && isiOS) {
-          document.getElementById("profile-download").style.display = "block";
           warn.textContent = "✅ Je gebruikt Safari op iOS. Profielinstallatie is mogelijk.";
           warn.style.background = "#e0ffe0";
           document.getElementById("profile-download").style.display = "block";
         } else {
           warn.textContent = "❌ Gebruik Safari op iOS om het profiel te installeren.";
           warn.style.background = "#ffe0e0";
+          document.getElementById("safari-hint").style.display = "block";
         }
 
         getLocalIP(ip => {
