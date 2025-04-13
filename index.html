@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Canon SELPHY Setup (v4.3)</title>
+  <title>Canon SELPHY Setup (v4.5)</title>
   <style>
     body {
       font-family: sans-serif;
@@ -19,7 +19,7 @@
   </style>
 </head>
 <body>
-  <h1>📸 Canon SELPHY instellen (v4.3)</h1>
+  <h1>📸 Canon SELPHY instellen (v4.5)</h1>
 
   <p>Controle vóór installatie van het printerprofiel:</p>
   <div id="browser-warning" class="result">🔄 Browsercontrole...</div>
@@ -30,13 +30,14 @@
   </div>
 
   <div id="safari-hint" class="result" style="display: none;">
-      ❗ <strong>Open deze pagina in Safari om het profiel te kunnen installeren.</strong><br>
-      <div style="margin-top: 10px;">
-        🔗 <code id="safari-link">https://photonic.github.io/selphy-setup/</code><br>
-        <button onclick="copyLink()" style="margin-top: 8px; padding: 10px 16px; font-size: 1em;">📋 Kopieer link</button>
-      </div>
+    ❗ <strong>Open deze pagina in Safari om het profiel te kunnen installeren.</strong><br>
+    <div style="margin-top: 10px;">
+      🔗 <code id="safari-link">https://photonic.github.io/selphy-setup/</code><br>
+      <button onclick="copyLink()" style="margin-top: 8px; padding: 10px 16px; font-size: 1em;">📋 Kopieer link</button>
     </div>
-    <p>Na installatie kun je deze pagina ook in andere browsers gebruiken.</p>
+  </div>
+
+  <p>Na installatie kun je deze pagina ook in andere browsers gebruiken.</p>
 
   <div class="note">
     <strong>Technische diagnose</strong><br>
@@ -49,12 +50,12 @@
     User-Agent: <code id="ua">...</code>
   </div>
 
-  <div class="note">
-    <strong>Debuglog</strong><br>
-    <pre id="debuglog" style="white-space: pre-wrap;"></pre>
-  </div>
 
   <script>
+    // ====== SCRIPT VOOR DIAGNOSE, TRIGGER EN VERBINDINGSINSTRUCTIES ======
+
+    
+    // 🔍 Probeert lokaal IP-adres te bepalen via WebRTC (beperkt op iOS)
     function getLocalIP(callback) {
       let pc = new RTCPeerConnection({iceServers:[]});
       pc.createDataChannel('');
@@ -68,26 +69,39 @@
       setTimeout(() => callback(null), 3000);
     }
 
-    function debug(msg) {
-      const log = document.getElementById("debuglog");
-      if (log) log.textContent += msg + "\n";
-    }
+    
 
+    
+    // 🧠 Extract iOS-versienummer uit de user-agent string
     function extractOSVersion(ua) {
       let match = ua.match(/OS ([0-9_]*) like Mac OS X/);
       return match ? match[1].replace(/_/g, ".") : "onbekend";
     }
 
-    setTimeout(() => {
-      debug("⏱️ Diagnose gestart (v4.1)");
+    
+    // 📎 Kopieert de setup-link naar het klembord en toont feedback
+    function copyLink() {
+      const text = "https://photonic.github.io/selphy-setup/";
+      navigator.clipboard.writeText(text)
+        .then(() => alert("✅ Link gekopieerd naar klembord!"))
+        .catch(() => alert("❌ Kopiëren mislukt. Houd de link ingedrukt om handmatig te kopiëren."));
+    }
 
+    
+    // 🕒 Start diagnose en controle na korte vertraging
+    setTimeout(() => {
+      
       try {
+        
+        // Haal userAgent en platform info op
         const ua = navigator.userAgent || "onbekend";
         const platform = navigator.platform || "onbekend";
         const isiOS = /iPhone|iPad|iPod/i.test(ua);
         const isSafari = /Safari/.test(ua) && !/CriOS/.test(ua);
         const osVersion = extractOSVersion(ua);
 
+        
+        // 🔧 Hulpfunctie om tekst in een element te zetten en logregel toe te voegen
         const el = (id, val) => {
           const target = document.getElementById(id);
           if (target) {
@@ -122,18 +136,20 @@
 
         el("internet", navigator.onLine ? "✅ Ja" : "❌ Nee");
 
+        // iOS trigger ping
+        try {
+          
+        // 🌐 Ping een afbeelding en een test-url zodat iOS sneller weet dat wifi geen internet heeft
+        new Image().src = "https://apple.com/favicon.ico";
+          fetch("https://apple.com/library/test/success.html").catch(() => {});
+        } catch (e) {
+          debug("⚠️ Trigger ping mislukt: " + e.message);
+        }
+
       } catch (e) {
         debug("💥 Fout in diagnose: " + e.message);
       }
     }, 150);
-  
-    function copyLink() {
-      const text = "https://photonic.github.io/selphy-setup/";
-      navigator.clipboard.writeText(text)
-        .then(() => alert("✅ Link gekopieerd naar klembord!"))
-        .catch(() => alert("❌ Kopiëren mislukt. Houd de link ingedrukt om handmatig te kopiëren."));
-    }
-</script>
-
+  </script>
 </body>
 </html>
